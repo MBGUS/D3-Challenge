@@ -70,9 +70,9 @@ var margin = {
                 .append("circle")
                 .classed("circle", true)
                 .attr("cx", d => xLinearScale(d.poverty))
-                .attr("cy", d => xLinearScale(d.healthcare))
+                .attr("cy", d => yLinearScale(d.healthcare))
                 .attr("r", "10")
-                .attr("fill", "lightblue")
+                .attr("fill", "gray")
                 .attr("opacity", ".6");
 
             var text = chartGroup.append("g").selectAll("text")
@@ -82,7 +82,7 @@ var margin = {
                 .classed('text', true)
                 .attr("x", d => xLinearScale(d.poverty))
                 .attr("y", d => yLinearScale(d.healthcare))
-                .attr("dy", ".35em")
+                // .attr("dy", "50%")
                 .text(d => d.abbr)
                 .attr("text-anchor", "middle")
                 .attr("font-family", "sans-serif")
@@ -90,23 +90,25 @@ var margin = {
                 .attr("fill", "white")
                 .attr("font-weight", "700");
 
-            // Create axis labels
+            // Create a label group for x and y abels    
+            var labelsGroup = chartGroup.append("g")
+                .attr("transform", `translate(${width / 2}, ${height + 20 })`);
+
+            // Create x label variable
+            var xLabel = labelsGroup.append("text")
+                .attr("x", 0)
+                .attr("y", 20)
+                .text("In Poverty (%) ")
+                .style("font-weight", "bold")
+
+                // Create y label variable
             chartGroup.append("text")
                 .attr("transform", "rotate(-90)")
-                .attr("y", 0 - margin.left + 10)
                 .attr("x", 0 - (height/2))
+                .attr("y", 0 - margin.left)
                 .attr("dy", "1em")
-                .attr("class", "axisText")
-                .text("Lacks Healthcare (%)")
-                .attr("text-anchor", "middle")
-                .attr("font-weight", "700");
-
-            chartGroup.append("text")
-                .attr("transform", `transalate(${width/2}, ${height + margin.top + 30})`)
-                .attr("class", "axisText")
-                .text("In Poverty (%)")
-                .attr("font-weight", "700");
-        
+                .text("Locks Healthcare (%)")
+                .style("font-weight", "bold")    
             }).catch(function(error){
             console.log(error);
         });
