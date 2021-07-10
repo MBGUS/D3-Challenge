@@ -101,7 +101,7 @@ var margin = {
                 .text("In Poverty (%) ")
                 .style("font-weight", "bold")
 
-                // Create y label variable
+            // Create y label variable
             chartGroup.append("text")
                 .attr("transform", "rotate(-90)")
                 .attr("x", 0 - (height/2))
