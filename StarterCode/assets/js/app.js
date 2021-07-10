@@ -2,7 +2,7 @@
 // SVG Dimensions
 
 var svgWidth = 960;
-var svgHeight = 500;
+var svgHeight = 600;
 
 // Margins
 
@@ -10,7 +10,7 @@ var margin = {
     top: 20,
     right: 40,
     bottom: 80,
-    left: 100
+    left: 50
   };
 
     var width = svgWidth - margin.left - margin.right;
@@ -42,11 +42,13 @@ var margin = {
             // Create Scale Functions
 
             var xLinearScale = d3.scaleLinear()
-                .domain([8, d3.max(censusData, d => d.poverty+2)])
+                // .domain([8, d3.max(censusData, d => d.poverty+2)])
+                .domain([d3.min(censusData, d => d.poverty) * 0.9, d3.max(censusData, d => d.poverty) * 1.1])
                 .range([0,width]);
 
             var yLinearScale = d3.scaleLinear()
-                .domain([4, d3.max(censusData, d => d.healthcare+2)])
+                // .domain([4, d3.max(censusData, d => d.healthcare+2)])
+                .domain([d3.min(censusData, d => d.healthcare) * 0.8, d3.max(censusData, d => d.healthcare) * 1.1])
                 .range([height, 0]);
 
             // Create Axis Function
@@ -66,16 +68,18 @@ var margin = {
                 .data(censusData)
                 .enter()
                 .append("circle")
+                .classed("circle", true)
                 .attr("cx", d => xLinearScale(d.poverty))
                 .attr("cy", d => xLinearScale(d.healthcare))
                 .attr("r", "10")
-                .attr("fill", "indigo")
+                .attr("fill", "lightblue")
                 .attr("opacity", ".6");
 
             var text = chartGroup.append("g").selectAll("text")
                 .data(censusData)
                 .enter()
                 .append("text")
+                .classed('text', true)
                 .attr("x", d => xLinearScale(d.poverty))
                 .attr("y", d => yLinearScale(d.healthcare))
                 .attr("dy", ".35em")
